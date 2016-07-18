@@ -6,6 +6,7 @@ import com.server.routing.Router;
 public class Routes implements RouteInitializer {
 
     public void initializeRoutes(Router router) {
-        
+        router.addRoute("GET", "/game");
+        router.addRoute("POST", "/game");
     }
 }

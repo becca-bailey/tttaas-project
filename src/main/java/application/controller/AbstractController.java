@@ -1,4 +1,4 @@
-package application.controllers;
+package application.controller;
 
 import com.server.ResponseData;
 import com.server.controller.Controller;

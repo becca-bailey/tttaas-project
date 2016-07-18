@@ -1,4 +1,4 @@
 package application.controllers;
 
-public class RootController {
+public class RootController extends AbstractController {
 }

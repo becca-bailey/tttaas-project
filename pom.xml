@@ -8,5 +8,13 @@
     <artifactId>tic-tac-toe</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <dependencies>
+        <dependency>
+            <groupId>becca-tom</groupId>
+            <artifactId>server</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+    </dependencies>
+
 
 </project>

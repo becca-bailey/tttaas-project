@@ -1,37 +1,43 @@
 package application.controller;
 
-import com.server.ResponseData;
-
-import com.server.utilities.Response;
-import tic_tac_toe.*;
 import clojure.java.api.Clojure;
 import clojure.lang.IFn;
+import com.server.ResponseData;
+import com.server.utilities.Response;
+import com.server.utilities.SharedUtilities;
+import tic_tac_toe.board$check_each_set_of_possible_moves;
+
+import java.util.List;
 
 public class GameController extends AbstractController{
+    private String body;
 
     public byte[] get() {
-        return Response.status(200).getBytes();
+        return (Response.status(200) + "\r\n\r\nHEY").getBytes();
+    }
+
+    public byte[] post() {
+        try {
+            List<String> boardFromJson = SharedUtilities.findAllMatches("(?<=\")(\\w*)(?=\")", body.split(":")[1]);
+            String[] currentBoard = boardFromJson.toArray(new String[boardFromJson.size()]);
+            boolean gameHasWinner = hasWinner(currentBoard);
+            String response = (Response.status(201) + "\r\n\r\n" + gameHasWinner);
+            return response.getBytes();
+        } catch (Exception e) {
+            return Response.status(404).getBytes();
+        }
     }
 
     public void sendResponseData(ResponseData responseData) {
-        String body = responseData.requestBody;
-        System.out.println(body);
+        this.body = responseData.requestBody;
     }
-
 
     public Boolean hasWinner(String[] board) {
         IFn require = Clojure.var("clojure.core","require");
-        IFn toArray = Clojure.var("clojure.core","to-array");
         require.invoke(Clojure.read("tic-tac-toe.game_loop"));
-        Object boardSeq = board$winning_combinations.invokeStatic(3);
-        Object[] possible_wins = (Object[]) toArray.invoke(boardSeq);
-        Boolean winner = false;
-        for (int i = 0; i < possible_wins.length; i++) {
-            if ((Boolean) board$is_a_winning_combination_QMARK_.invokeStatic(board, possible_wins[i], "X") || (Boolean) board$is_a_winning_combination_QMARK_.invokeStatic(board, possible_wins[i], "O") ) {
-                winner = true;
-            }
-        }
-        return winner;
+        boolean xWins = (Boolean) board$check_each_set_of_possible_moves.invokeStatic(board, "X");
+        boolean oWins = (Boolean) board$check_each_set_of_possible_moves.invokeStatic(board, "O");
+        return xWins || oWins ;
     }
 
     public Boolean isTie(String[] board) {

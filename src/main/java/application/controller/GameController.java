@@ -5,7 +5,7 @@ import clojure.lang.IFn;
 import com.server.ResponseData;
 import com.server.utilities.Response;
 import com.server.utilities.SharedUtilities;
-import tic_tac_toe.board$check_each_set_of_possible_moves;
+import tic_tac_toe.*;
 
 import java.util.List;
 
@@ -13,17 +13,22 @@ public class GameController extends AbstractController{
     private String body;
 
     public byte[] get() {
-        return (Response.status(200) + "\r\n\r\nHEY").getBytes();
+        return (Response.status(200) + "\r\n\r\n").getBytes();
     }
 
     public byte[] post() {
         try {
+            System.out.println(body);
             List<String> boardFromJson = SharedUtilities.findAllMatches("(?<=\")(\\w*)(?=\")", body.split(":")[1]);
             String[] currentBoard = boardFromJson.toArray(new String[boardFromJson.size()]);
             boolean gameHasWinner = hasWinner(currentBoard);
-            String response = (Response.status(201) + "\r\n\r\n" + gameHasWinner);
+            boolean gameIsTie = isTie(currentBoard);
+            String status = getGameStatus(gameHasWinner, gameIsTie);
+            System.out.println("Status: " + status);
+            String response = (Response.status(201) + "\r\n\r\n" + status);
             return response.getBytes();
         } catch (Exception e) {
+            e.printStackTrace();
             return Response.status(404).getBytes();
         }
     }
@@ -41,16 +46,18 @@ public class GameController extends AbstractController{
     }
 
     public Boolean isTie(String[] board) {
-        return (board.length == board.length - count(board, "")) && !hasWinner(board);
+        IFn require = Clojure.var("clojure.core","require");
+        require.invoke(Clojure.read("tic-tac-toe.game_loop"));
+        return (Boolean) board$tie_QMARK_.invokeStatic(board);
     }
 
-    public int count(String[] array, String element) {
-        int count = 0;
-        for (int i = 0; i < array.length; i++) {
-            if (array[i] == element) {
-                count++;
-            }
+    public String getGameStatus(Boolean gameHasWinner, Boolean gameIsTie) {
+        if (gameHasWinner) {
+            return "win";
+        } else if (gameIsTie) {
+            return "tie";
+        } else {
+            return "in progress";
         }
-        return count;
     }
 }

@@ -1,6 +1,7 @@
 package application;
 
 import com.server.Server;
+import com.server.ServerArguments;
 import com.server.ServerConfig;
 import com.server.routing.RouteInitializer;
 import com.server.routing.Router;
@@ -9,13 +10,15 @@ import java.io.*;
 import java.util.Properties;
 
 public class ProjectRunner {
-    private static String rootDirectory = "/Users/Becca/8thLight/tttaas/tttaas-project";
+    private static File rootDirectory;
 
     public static void main(String[] args) {
         try {
+            ServerArguments arguments = new ServerArguments(args);
+            rootDirectory = arguments.getRootDirectory();
             loadProperties();
             addRoutes();
-            Server.main(new String[] { "-r", rootDirectory});
+            Server.main(new String[] { "-r", rootDirectory.getPath()});
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -25,9 +28,9 @@ public class ProjectRunner {
         Properties config = new Properties();
         String filename = "config.properties";
         try {
-            InputStream input = new FileInputStream(ProjectRunner.rootDirectory + "/config.properties");
+            InputStream input = new FileInputStream(rootDirectory.getPath() + "/config.properties");
             config.load(input);
-            ServerConfig.rootDirectory = new File(rootDirectory);
+            ServerConfig.rootDirectory = rootDirectory;
             ServerConfig.packageName = config.getProperty("packageName");
             ServerConfig.routesClass = config.getProperty("routesClass");
             input.close();

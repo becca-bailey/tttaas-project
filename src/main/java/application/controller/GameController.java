@@ -18,7 +18,6 @@ public class GameController extends AbstractController{
 
     public byte[] post() {
         try {
-            System.out.println(body);
             List<String> boardFromJson = SharedUtilities.findAllMatches("(?<=\")(\\w*)(?=\")", body.split(":")[1]);
             String[] currentBoard = boardFromJson.toArray(new String[boardFromJson.size()]);
             boolean gameHasWinner = hasWinner(currentBoard);
@@ -28,7 +27,6 @@ public class GameController extends AbstractController{
             String response = (Response.status(201) + "\r\n\r\n" + status);
             return response.getBytes();
         } catch (Exception e) {
-            e.printStackTrace();
             return Response.status(404).getBytes();
         }
     }

@@ -23,7 +23,7 @@ public class GameController extends AbstractController{
             boolean gameHasWinner = hasWinner(currentBoard);
             boolean gameIsTie = isTie(currentBoard);
             String status = getGameStatus(gameHasWinner, gameIsTie);
-            System.out.println("Status: " + status);
+            System.out.println("Status: " + status + "\n");
             String response = (Response.status(201) + "\r\n\r\n" + status);
             return response.getBytes();
         } catch (Exception e) {

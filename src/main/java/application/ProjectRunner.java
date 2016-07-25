@@ -18,7 +18,7 @@ public class ProjectRunner {
             rootDirectory = arguments.getRootDirectory();
             loadProperties();
             addRoutes();
-            Server.main(new String[] { "-r", rootDirectory.getPath()});
+            Server.main(new String[] { "-r", rootDirectory.getPath(), "-p", arguments.getPortNumber() + ""});
         } catch (Exception e) {
             e.printStackTrace();
         }

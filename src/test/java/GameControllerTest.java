@@ -1,42 +1,35 @@
 import application.controller.GameController;
+import application.game.Game;
+import application.game.HumanVsComputer;
+import application.game.HumanVsHuman;
+import org.json.JSONArray;
 import org.junit.Test;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 public class GameControllerTest {
-    GameController controller = new GameController();
+    private GameController controller = new GameController();
+    private String[] initialBoard = new String[] {"", "", "", "", "", "", "", "", ""};
+
     @Test
-    public void hasWinnerReturnsTrueIfThereIsAWinner() throws Exception {
-        String[] boardWithWinner = new String[] {"X", "X", "X", "O", "", "", "", "O", "O"};
-        assertTrue(controller.hasWinner(boardWithWinner));
+    public void getGameFromGameTypeReturnsAHumanVsHumanGame() throws Throwable {
+        Game game = controller.getGame("humanVsHuman", initialBoard);
+        assertEquals(HumanVsHuman.class, game.getClass());
     }
 
     @Test
-    public void hasWinnerReturnsFalseForInitialBoard() throws Exception {
-        String[] initialBoard = new String[] {"", "", "", "", "", "", "", "", ""};
-        assertFalse(controller.hasWinner(initialBoard));
+    public void getGameFromGameTypeReturnsAHumanVsComputerGame() throws Throwable {
+        Game game = controller.getGame("humanVsComputer", initialBoard);
+        Game game2 = controller.getGame("computerVsHuman", initialBoard);
+        assertEquals(HumanVsComputer.class, game.getClass());
+        assertEquals(HumanVsComputer.class, game2.getClass());
     }
 
     @Test
-    public void getGameStatusReturnsWinner() {
-        Boolean hasWinner = true;
-        Boolean isTie = false;
-        assertEquals("win", controller.getGameStatus(hasWinner, isTie));
-    }
-
-    @Test
-    public void getGameStatusReturnsTie() {
-        Boolean isTie = true;
-        Boolean hasWinner = false;
-        assertEquals("tie", controller.getGameStatus(hasWinner, isTie));
-    }
-
-    @Test
-    public void getGameStatusReturnsGameInProgress() {
-        Boolean isTie = false;
-        Boolean hasWinner = false;
-        assertEquals("in progress", controller.getGameStatus(hasWinner, isTie));
+    public void toStringArrayReturnsStringArrayFromJSONArray() throws Throwable {
+        JSONArray jsonArray = new JSONArray(initialBoard);
+        String[] stringArray = controller.toStringArray(jsonArray);
+        assertArrayEquals(initialBoard, stringArray);
     }
 }

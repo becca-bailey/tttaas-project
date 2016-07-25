@@ -23,11 +23,6 @@ public class ProjectRunner {
             Server.main(new String[] { "-r", rootDirectory.getPath(), "-p", portNumber + ""});
         } catch (Exception e) {
             e.printStackTrace();
-            try{
-                Server.main(new String[] { "-r", rootDirectory.getPath(), "-p", portNumber + ""});
-            } catch (Exception x) {
-
-            }
         }
     }
 

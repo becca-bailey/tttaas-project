@@ -13,14 +13,21 @@ public class ProjectRunner {
     private static File rootDirectory;
 
     public static void main(String[] args) {
+        int portNumber = 5000;
         try {
             ServerArguments arguments = new ServerArguments(args);
+            portNumber = arguments.getPortNumber();
             rootDirectory = arguments.getRootDirectory();
             loadProperties();
             addRoutes();
-            Server.main(new String[] { "-r", rootDirectory.getPath(), "-p", arguments.getPortNumber() + ""});
+            Server.main(new String[] { "-r", rootDirectory.getPath(), "-p", portNumber + ""});
         } catch (Exception e) {
             e.printStackTrace();
+            try{
+                Server.main(new String[] { "-r", rootDirectory.getPath(), "-p", portNumber + ""});
+            } catch (Exception x) {
+
+            }
         }
     }
 

@@ -4,10 +4,10 @@ import clojure.java.api.Clojure;
 import clojure.lang.IFn;
 import com.server.ResponseData;
 import com.server.utilities.Response;
-import com.server.utilities.SharedUtilities;
-import tic_tac_toe.*;
-
-import java.util.List;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import tic_tac_toe.board$check_each_set_of_possible_moves;
+import tic_tac_toe.board$tie_QMARK_;
 
 public class GameController extends AbstractController{
     private String body;
@@ -18,8 +18,12 @@ public class GameController extends AbstractController{
 
     public byte[] post() {
         try {
-            List<String> boardFromJson = SharedUtilities.findAllMatches("(?<=\")(\\w*)(?=\")", body.split(":")[1]);
-            String[] currentBoard = boardFromJson.toArray(new String[boardFromJson.size()]);
+            JSONObject json = new JSONObject(body);
+            JSONArray board = json.getJSONArray("board");
+            String gameType = json.getString("gameType");
+            System.out.println(gameType);
+            String[] currentBoard = toStringArray(board);
+
             boolean gameHasWinner = hasWinner(currentBoard);
             boolean gameIsTie = isTie(currentBoard);
             String status = getGameStatus(gameHasWinner, gameIsTie);
@@ -27,8 +31,17 @@ public class GameController extends AbstractController{
             String response = (Response.status(201) + "\r\n\r\n" + status);
             return response.getBytes();
         } catch (Exception e) {
+            e.printStackTrace();
             return Response.status(404).getBytes();
         }
+    }
+
+    private String[] toStringArray(JSONArray board) {
+        String[] arr = new String[board.length()];
+        for(int i=0; i<arr.length; i++) {
+            arr[i]=board.optString(i);
+        }
+        return arr;
     }
 
     public void sendResponseData(ResponseData responseData) {

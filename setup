@@ -6,9 +6,14 @@ git pull
 lein uberjar
 cd ../tttaas-server/
 git pull
+mvn clean
 mvn package
 cd ../.. 
+rm -rf ./repo/*
 mvn clean 
+mvn deploy:deploy-file -Durl=file:///Users/Tom/8thLight/iOS/tttaas-project/repo/ -Dfile=./lib/tttaas-server/target/server-0.0.1.jar -DgroupId=becca-tom -DartifactId=server -Dversion=0.0.1 -Dpackaging=jar
+mvn deploy:deploy-file -Durl=file:///Users/Tom/8thLight/iOS/tttaas-project/repo/ -Dfile=./lib/tttaas-clojure/target/tic-tac-toe-0.1.0-SNAPSHOT-standalone.jar -DgroupId=tic-tac-toe -DartifactId=tic-tac-toe -Dversion=0.1.0-SNAPSHOT -Dpackaging=jar
 mvn install:install-file -Dfile=./lib/tttaas-clojure/target/tic-tac-toe-0.1.0-SNAPSHOT-standalone.jar -DgroupId=tic-tac-toe -DartifactId=tic-tac-toe -Dversion=0.1.0-SNAPSHOT -Dpackaging=jar 
 mvn install:install-file -Dfile=./lib/tttaas-server/target/server-0.0.1.jar -DgroupId=becca-tom -DartifactId=server -Dversion=0.0.1 -Dpackaging=jar
+mvn deploy:deploy-file -Durl=file:///Users/Tom/8thLight/iOS/tttaas-project/repo/ -Dfile=./lib/tttaas-server/target/server-0.0.1.jar -DgroupId=becca-tom -DartifactId=server -Dversion=0.0.1 -Dpackaging=jar
 mvn package 

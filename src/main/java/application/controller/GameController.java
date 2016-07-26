@@ -23,12 +23,15 @@ public class GameController extends AbstractController{
             String gameType = json.getString("gameType");
             System.out.println(gameType);
             String[] currentBoard = toStringArray(board);
+            JSONObject jsonData = new JSONObject();
 
             boolean gameHasWinner = hasWinner(currentBoard);
             boolean gameIsTie = isTie(currentBoard);
+
             String status = getGameStatus(gameHasWinner, gameIsTie);
+            jsonData.put("status", status);
             System.out.println("Status: " + status + "\n");
-            String response = (Response.status(201) + "\r\n\r\n" + status);
+            String response = (Response.status(201) + "\r\n\r\n" + jsonData);
             return response.getBytes();
         } catch (Exception e) {
             e.printStackTrace();

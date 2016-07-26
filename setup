@@ -3,17 +3,23 @@ git clone https://github.com/beccanelson/tttaas-clojure.git ./lib/tttaas-clojure
 git clone https://github.com/beccanelson/tttaas-server.git ./lib/tttaas-server/
 cd ./lib/tttaas-clojure
 git pull
+lein pom
+mvn clean
 lein uberjar
 cd ../tttaas-server/
 git pull
 mvn clean
+mvn install
 mvn package
 cd ../.. 
 rm -rf ./repo/*
 mvn clean 
-mvn deploy:deploy-file -Durl=file:///Users/Tom/8thLight/iOS/tttaas-project/repo/ -Dfile=./lib/tttaas-server/target/server-0.0.1.jar -DgroupId=becca-tom -DartifactId=server -Dversion=0.0.1 -Dpackaging=jar
-mvn deploy:deploy-file -Durl=file:///Users/Tom/8thLight/iOS/tttaas-project/repo/ -Dfile=./lib/tttaas-clojure/target/tic-tac-toe-0.1.0-SNAPSHOT-standalone.jar -DgroupId=tic-tac-toe -DartifactId=tic-tac-toe -Dversion=0.1.0-SNAPSHOT -Dpackaging=jar
-mvn install:install-file -Dfile=./lib/tttaas-clojure/target/tic-tac-toe-0.1.0-SNAPSHOT-standalone.jar -DgroupId=tic-tac-toe -DartifactId=tic-tac-toe -Dversion=0.1.0-SNAPSHOT -Dpackaging=jar 
-mvn install:install-file -Dfile=./lib/tttaas-server/target/server-0.0.1.jar -DgroupId=becca-tom -DartifactId=server -Dversion=0.0.1 -Dpackaging=jar
-mvn deploy:deploy-file -Durl=file:///Users/Tom/8thLight/iOS/tttaas-project/repo/ -Dfile=./lib/tttaas-server/target/server-0.0.1.jar -DgroupId=becca-tom -DartifactId=server -Dversion=0.0.1 -Dpackaging=jar
-mvn package 
+/Users/Tom/8thLight/iOS/stormy-savannah-24890
+mvn deploy:deploy-file -Durl=file:///Users/Tom/8thLight/iOS/stormy-savannah-24890/repo/ -Dfile=./lib/tttaas-server/target/server-0.0.2.jar -DgroupId=becca-tom -DartifactId=server -Dversion=0.0.2 -Dpackaging=jar
+mvn deploy:deploy-file -Durl=file:///Users/Tom/8thLight/iOS/stormy-savannah-24890/repo/ -Dfile=./lib/tttaas-clojure/target/tic-tac-toe-0.2.0-SNAPSHOT-standalone.jar -DgroupId=tic-tac-toe -DartifactId=tic-tac-toe -Dversion=0.2.0-SNAPSHOT -Dpackaging=jar
+mvn install:install-file -Dfile=./lib/tttaas-clojure/target/tic-tac-toe-0.2.0-SNAPSHOT-standalone.jar -DgroupId=tic-tac-toe -DartifactId=tic-tac-toe -Dversion=0.2.0-SNAPSHOT -Dpackaging=jar 
+mvn install:install-file -Dfile=./lib/tttaas-server/target/server-0.0.2.jar -DgroupId=becca-tom -DartifactId=server -Dversion=0.0.2 -Dpackaging=jar
+mvn deploy:deploy-file -Durl=file:///Users/Tom/8thLight/iOS/tttaas-project/repo/ -Dfile=./lib/tttaas-server/target/server-0.0.2.jar -DgroupId=becca-tom -DartifactId=server -Dversion=0.0.2 -Dpackaging=jar
+mvn package -DskipTests
+mvn clean compile assembly:single
+

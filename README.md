@@ -1,4 +1,4 @@
-# Becca and Tom's Tic Tac Toe Server ![travis](https://travis-ci.org/beccanelson/tttaas-project.svg?branch=master)
+# Becca and Tom's Tic Tac Toe Server [![Build Status](https://travis-ci.org/beccanelson/tttaas-project.svg?branch=master)](https://travis-ci.org/beccanelson/tttaas-project)
 
 This is the server that works with our [iOS application](https://github.com/beccanelson/tttaas-iOS).
 

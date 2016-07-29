@@ -8,7 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import tic_tac_toe.board$check_each_set_of_possible_moves;
 import tic_tac_toe.board$tie_QMARK_;
-import tic_tac_toe.iOS_functions$minimax_move;
+import tic_tac_toe.*;
 
 public class GameController extends AbstractController{
     private String body;
@@ -54,16 +54,21 @@ public class GameController extends AbstractController{
 
     public Boolean hasWinner(String[] board) {
         IFn require = Clojure.var("clojure.core","require");
-        require.invoke(Clojure.read("tic-tac-toe.game_loop"));
-        boolean xWins = (Boolean) board$check_each_set_of_possible_moves.invokeStatic(board, "X");
-        boolean oWins = (Boolean) board$check_each_set_of_possible_moves.invokeStatic(board, "O");
-        return xWins || oWins ;
+        require.invoke(Clojure.read("tic-tac-toe.board"));
+        return (Boolean) board$check_each_marker_for_win.invokeStatic(board);
     }
 
     private Boolean isTie(String[] board) {
         IFn require = Clojure.var("clojure.core","require");
-        require.invoke(Clojure.read("tic-tac-toe.game_loop"));
+        require.invoke(Clojure.read("tic-tac-toe.board"));
         return (Boolean) board$tie_QMARK_.invokeStatic(board);
+    }
+
+    public Object getComputerMove(String[] board) {
+        IFn require = Clojure.var("clojure.core", "require");
+        require.invoke(Clojure.read("tic-tac-toe.iOS_functions"));
+        long value = (Long) iOS_functions$minimax_move.invokeStatic(board);
+        return (int) value;
     }
 
     public String getGameStatus(Boolean gameHasWinner, Boolean gameIsTie) {
@@ -76,10 +81,4 @@ public class GameController extends AbstractController{
         }
     }
 
-    public Object getComputerMove(String[] board) {
-        IFn require = Clojure.var("clojure.core", "require");
-        require.invoke(Clojure.read("tic-tac-toe.iOS_functions"));
-        long value = (Long) iOS_functions$minimax_move.invokeStatic(board);
-        return (int) value;
-    }
 }

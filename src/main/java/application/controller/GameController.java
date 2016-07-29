@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import tic_tac_toe.board$check_each_set_of_possible_moves;
 import tic_tac_toe.board$tie_QMARK_;
+import tic_tac_toe.iOS_functions$minimax_move;
 
 public class GameController extends AbstractController{
     private String body;
@@ -59,7 +60,7 @@ public class GameController extends AbstractController{
         return xWins || oWins ;
     }
 
-    public Boolean isTie(String[] board) {
+    private Boolean isTie(String[] board) {
         IFn require = Clojure.var("clojure.core","require");
         require.invoke(Clojure.read("tic-tac-toe.game_loop"));
         return (Boolean) board$tie_QMARK_.invokeStatic(board);
@@ -73,5 +74,12 @@ public class GameController extends AbstractController{
         } else {
             return "in progress";
         }
+    }
+
+    public Object getComputerMove(String[] board) {
+        IFn require = Clojure.var("clojure.core", "require");
+        require.invoke(Clojure.read("tic-tac-toe.iOS_functions"));
+        long value = (Long) iOS_functions$minimax_move.invokeStatic(board);
+        return (int) value;
     }
 }

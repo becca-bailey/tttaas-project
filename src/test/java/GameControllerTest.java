@@ -7,6 +7,8 @@ import static org.junit.Assert.assertTrue;
 
 public class GameControllerTest {
     GameController controller = new GameController();
+    String[] initialBoard = new String[] {"", "", "", "", "", "", "", "", ""};
+
     @Test
     public void hasWinnerReturnsTrueIfThereIsAWinner() throws Exception {
         String[] boardWithWinner = new String[] {"X", "X", "X", "O", "", "", "", "O", "O"};
@@ -15,7 +17,6 @@ public class GameControllerTest {
 
     @Test
     public void hasWinnerReturnsFalseForInitialBoard() throws Exception {
-        String[] initialBoard = new String[] {"", "", "", "", "", "", "", "", ""};
         assertFalse(controller.hasWinner(initialBoard));
     }
 
@@ -38,5 +39,10 @@ public class GameControllerTest {
         Boolean isTie = false;
         Boolean hasWinner = false;
         assertEquals("in progress", controller.getGameStatus(hasWinner, isTie));
+    }
+
+    @Test
+    public void getComputerMoveReturnsBestMove() {
+        assertEquals(8, controller.getComputerMove(initialBoard));
     }
 }

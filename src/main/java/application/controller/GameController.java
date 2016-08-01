@@ -1,14 +1,12 @@
 package application.controller;
 
-import clojure.java.api.Clojure;
-import clojure.lang.IFn;
+import application.game.Game;
+import application.game.HumanVsComputer;
+import application.game.HumanVsHuman;
 import com.server.ResponseData;
 import com.server.utilities.Response;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import tic_tac_toe.board$check_each_set_of_possible_moves;
-import tic_tac_toe.board$tie_QMARK_;
-import tic_tac_toe.*;
 
 public class GameController extends AbstractController{
     private String body;
@@ -26,11 +24,13 @@ public class GameController extends AbstractController{
             String[] currentBoard = toStringArray(board);
             JSONObject jsonData = new JSONObject();
 
-            boolean gameHasWinner = hasWinner(currentBoard);
-            boolean gameIsTie = isTie(currentBoard);
+            Game game = getGame(gameType, currentBoard);
+            String[] updatedBoard = game.getBoard();
 
-            String status = getGameStatus(gameHasWinner, gameIsTie);
+            String status = game.getStatus();
+
             jsonData.put("status", status);
+            jsonData.put("board", updatedBoard);
             System.out.println("Status: " + status + "\n");
             String response = (Response.status(201) + "\r\n\r\n" + jsonData);
             return response.getBytes();
@@ -40,7 +40,15 @@ public class GameController extends AbstractController{
         }
     }
 
-    private String[] toStringArray(JSONArray board) {
+    public Game getGame(String gameType, String[] board) {
+        if (gameType.equals("computerVsHuman") || gameType.equals("humanVsComputer")) {
+            return new HumanVsComputer(board);
+        } else {
+            return new HumanVsHuman(board);
+        }
+    }
+
+    public String[] toStringArray(JSONArray board) {
         String[] arr = new String[board.length()];
         for(int i=0; i<arr.length; i++) {
             arr[i]=board.optString(i);
@@ -51,34 +59,4 @@ public class GameController extends AbstractController{
     public void sendResponseData(ResponseData responseData) {
         this.body = responseData.requestBody;
     }
-
-    public Boolean hasWinner(String[] board) {
-        IFn require = Clojure.var("clojure.core","require");
-        require.invoke(Clojure.read("tic-tac-toe.board"));
-        return (Boolean) board$check_each_marker_for_win.invokeStatic(board);
-    }
-
-    private Boolean isTie(String[] board) {
-        IFn require = Clojure.var("clojure.core","require");
-        require.invoke(Clojure.read("tic-tac-toe.board"));
-        return (Boolean) board$tie_QMARK_.invokeStatic(board);
-    }
-
-    public Object getComputerMove(String[] board) {
-        IFn require = Clojure.var("clojure.core", "require");
-        require.invoke(Clojure.read("tic-tac-toe.iOS_functions"));
-        long value = (Long) iOS_functions$minimax_move.invokeStatic(board);
-        return (int) value;
-    }
-
-    public String getGameStatus(Boolean gameHasWinner, Boolean gameIsTie) {
-        if (gameHasWinner) {
-            return "win";
-        } else if (gameIsTie) {
-            return "tie";
-        } else {
-            return "in progress";
-        }
-    }
-
 }

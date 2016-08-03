@@ -19,7 +19,7 @@
         <dependency>
             <groupId>becca-tom</groupId>
             <artifactId>server</artifactId>
-            <version>0.0.2</version>
+            <version>0.0.3</version>
         </dependency>
         <dependency>
             <groupId>tic-tac-toe</groupId>
@@ -65,7 +65,7 @@
       <configuration>
         <archive>
           <manifest>
-            <mainClass>fully.qualified.MainClass</mainClass>
+            <mainClass>application.ProjectRunner</mainClass>
           </manifest>
         </archive>
         <descriptorRefs>

@@ -28,11 +28,10 @@ public class GameController extends AbstractController{
             String[] updatedBoard = game.getBoard();
 
             String status = game.getStatus();
-
             jsonData.put("status", status);
             jsonData.put("board", updatedBoard);
             System.out.println("Status: " + status + "\n");
-            String response = (Response.status(201) + "\r\n\r\n" + jsonData);
+            String response = (Response.status(201) + "\r\n" + "Access-Control-Allow-Origin: *" + "\r\n" + "Access-Control-Allow-Methods: POST" + "\r\n" + "Access-Control-Max-Age: 1000" + "\r\n\r\n" + jsonData);
             return response.getBytes();
         } catch (Exception e) {
             e.printStackTrace();

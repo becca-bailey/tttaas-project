@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata modelVersion="1.1.0">
+  <groupId>tic-tac-toe</groupId>
+  <artifactId>tic-tac-toe</artifactId>
+  <version>0.2.1-SNAPSHOT</version>
+  <versioning>
+    <snapshot>
+      <timestamp>20160817.214708</timestamp>
+      <buildNumber>1</buildNumber>
+    </snapshot>
+    <lastUpdated>20160817214708</lastUpdated>
+    <snapshotVersions>
+      <snapshotVersion>
+        <extension>jar</extension>
+        <value>0.2.1-20160817.214708-1</value>
+        <updated>20160817214708</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <extension>pom</extension>
+        <value>0.2.1-20160817.214708-1</value>
+        <updated>20160817214708</updated>
+      </snapshotVersion>
+    </snapshotVersions>
+  </versioning>
+</metadata>

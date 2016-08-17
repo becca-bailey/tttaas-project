@@ -9,13 +9,13 @@ public class HumanVsComputerTest {
 
     @Test
     public void getComputerMoveReturnsBestMove() {
-        HumanVsComputer game = new HumanVsComputer(initialBoard);
+        HumanVsComputer game = new HumanVsComputer(initialBoard, "O");
         assertEquals(8, game.getComputerMove());
     }
 
     @Test
     public void getBoardReturnsUpdatedBoardWithFirstMove() {
-        HumanVsComputer game = new HumanVsComputer(initialBoard);
+        HumanVsComputer game = new HumanVsComputer(initialBoard, "O");
         String[] expectedFirstMove = new String[] {"", "", "", "", "", "", "", "", "O"};
         assertArrayEquals(expectedFirstMove, game.getBoard());
     }
@@ -23,7 +23,7 @@ public class HumanVsComputerTest {
     @Test
     public void getBoardReturnsUpdatedBoardWithSecondMove() {
         String[] firstHumanMove = new String[] {"", "", "", "", "", "", "", "", "X"};
-        HumanVsComputer game = new HumanVsComputer(firstHumanMove);
+        HumanVsComputer game = new HumanVsComputer(firstHumanMove, "O");
         String[] expectedSecondMove = new String[] {"", "", "", "", "O", "", "", "", "X"};
         assertArrayEquals(expectedSecondMove, game.getBoard());
     }

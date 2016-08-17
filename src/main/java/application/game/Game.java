@@ -8,9 +8,11 @@ import tic_tac_toe.board$tie_QMARK_;
 
 public abstract class Game {
     public String[] board;
+    private String marker;
 
-    public Game(String[] board) {
+    public Game(String[] board, String marker) {
         this.board = board;
+        this.marker = marker;
         IFn require = Clojure.var("clojure.core", "require");
         require.invoke(Clojure.read("tic-tac-toe.board"));
     }

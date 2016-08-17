@@ -6,17 +6,19 @@ import tic_tac_toe.iOS_functions$minimax_move;
 
 public class HumanVsComputer extends Game {
     private String[] board;
+    private String marker;
 
-    public HumanVsComputer(String[] board) {
-        super(board);
+    public HumanVsComputer(String[] board, String marker) {
+        super(board, marker);
         this.board = board;
+        this.marker = marker;
     }
 
     @Override
     public String[] getBoard() {
         if (!gameIsCompleted()) {
             int computerMove = getComputerMove();
-            board[computerMove] = "O";
+            board[computerMove] = marker;
         }
         return board;
     }

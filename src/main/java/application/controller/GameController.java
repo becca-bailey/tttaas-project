@@ -1,5 +1,6 @@
 package application.controller;
 
+import application.game.ComputerVsComputer;
 import application.game.Game;
 import application.game.HumanVsComputer;
 import application.game.HumanVsHuman;
@@ -10,6 +11,7 @@ import org.json.JSONObject;
 
 public class GameController extends AbstractController{
     private String body;
+    private String computerMarker;
 
     public byte[] get() {
         return (Response.status(200) + "\r\n\r\n").getBytes();
@@ -20,6 +22,11 @@ public class GameController extends AbstractController{
             JSONObject json = new JSONObject(body);
             JSONArray board = json.getJSONArray("board");
             String gameType = json.getString("gameType");
+            try {
+                computerMarker = json.getString("computerMarker");
+            } catch (Exception e){
+                computerMarker = "O";
+            }
             System.out.println(gameType);
             String[] currentBoard = toStringArray(board);
             JSONObject jsonData = new JSONObject();
@@ -28,6 +35,7 @@ public class GameController extends AbstractController{
             String[] updatedBoard = game.getBoard();
 
             String status = game.getStatus();
+
             jsonData.put("status", status);
             jsonData.put("board", updatedBoard);
             System.out.println("Status: " + status + "\n");
@@ -41,9 +49,11 @@ public class GameController extends AbstractController{
 
     public Game getGame(String gameType, String[] board) {
         if (gameType.equals("computerVsHuman") || gameType.equals("humanVsComputer")) {
-            return new HumanVsComputer(board);
-        } else {
-            return new HumanVsHuman(board);
+            return new HumanVsComputer(board, "O");
+        }else if (gameType.equals("computerVsComputer")) {
+            return new ComputerVsComputer(board, this.computerMarker);
+        }else {
+            return new HumanVsHuman(board, "O");
         }
     }
 

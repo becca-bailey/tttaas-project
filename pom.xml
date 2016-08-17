@@ -24,7 +24,7 @@
         <dependency>
             <groupId>tic-tac-toe</groupId>
             <artifactId>tic-tac-toe</artifactId>
-            <version>0.2.0-SNAPSHOT</version>
+            <version>0.2.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

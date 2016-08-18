@@ -14,31 +14,31 @@ public class GameTest {
 
     @Test
     public void hasWinnerReturnsTrueIfThereIsAWinner() throws Exception {
-        Game game = new HumanVsHuman(boardWithWinner, "O");
+        Game game = new HumanVsHuman(boardWithWinner, "O", "easy");
         assertTrue(game.hasWinner());
     }
 
     @Test
     public void hasWinnerReturnsFalseForInitialBoard() throws Exception {
-        Game game = new HumanVsHuman(initialBoard, "O");
+        Game game = new HumanVsHuman(initialBoard, "O", "easy");
         assertFalse(game.hasWinner());
     }
 
     @Test
     public void getGameStatusReturnsWinner() {
-        Game game = new HumanVsHuman(boardWithWinner, "O");
-        assertEquals("win", game.getStatus());
+        Game game = new HumanVsHuman(boardWithWinner, "O", "easy");
+        assertEquals("player1Wins", game.getStatus());
     }
 
     @Test
     public void getGameStatusReturnsTie() {
-        Game game = new HumanVsHuman(boardWithTie, "O");
+        Game game = new HumanVsHuman(boardWithTie, "O", "easy");
         assertEquals("tie", game.getStatus());
     }
 
     @Test
     public void getGameStatusReturnsGameInProgress() {
-        Game game = new HumanVsHuman(initialBoard, "O");
+        Game game = new HumanVsHuman(initialBoard, "O", "easy");
         assertEquals("in progress", game.getStatus());
     }
 }

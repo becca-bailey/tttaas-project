@@ -4,8 +4,8 @@
   <artifactId>tic-tac-toe</artifactId>
   <versioning>
     <versions>
-      <version>0.2.1-SNAPSHOT</version>
+      <version>0.2.2-SNAPSHOT</version>
     </versions>
-    <lastUpdated>20160817214708</lastUpdated>
+    <lastUpdated>20160819162617</lastUpdated>
   </versioning>
 </metadata>

@@ -14,14 +14,14 @@ public class GameControllerTest {
 
     @Test
     public void getGameFromGameTypeReturnsAHumanVsHumanGame() throws Throwable {
-        Game game = controller.getGame("humanVsHuman", initialBoard);
+        Game game = controller.getGame("humanVsHuman", initialBoard, "easy");
         assertEquals(HumanVsHuman.class, game.getClass());
     }
 
     @Test
     public void getGameFromGameTypeReturnsAHumanVsComputerGame() throws Throwable {
-        Game game = controller.getGame("humanVsComputer", initialBoard);
-        Game game2 = controller.getGame("computerVsHuman", initialBoard);
+        Game game = controller.getGame("humanVsComputer", initialBoard, "easy");
+        Game game2 = controller.getGame("computerVsHuman", initialBoard, "easy");
         assertEquals(HumanVsComputer.class, game.getClass());
         assertEquals(HumanVsComputer.class, game2.getClass());
     }

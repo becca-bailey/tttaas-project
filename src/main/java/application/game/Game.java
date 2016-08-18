@@ -3,14 +3,14 @@ package application.game;
 import clojure.java.api.Clojure;
 import clojure.lang.IFn;
 import tic_tac_toe.board$check_each_marker_for_win;
-import tic_tac_toe.*;
+import tic_tac_toe.board$check_each_set_of_possible_moves;
 import tic_tac_toe.board$tie_QMARK_;
 
 public abstract class Game {
     public String[] board;
     private String marker;
 
-    public Game(String[] board, String marker) {
+    public Game(String[] board, String marker, String computerDifficulty) {
         this.board = board;
         this.marker = marker;
         IFn require = Clojure.var("clojure.core", "require");

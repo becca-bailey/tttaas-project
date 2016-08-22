@@ -20,4 +20,6 @@ Inside the root folder:
 `mvn test`
 
 ## To start server:
-`./server`
+`./server` 
+
+**Note:** `./setup` must have been run

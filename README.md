@@ -6,6 +6,8 @@ This is the server that works with our [iOS application](https://github.com/becc
 + [Java](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 + [Maven](https://maven.apache.org/)
 + [Leiningen](http://leiningen.org/)
++ [Clojure tic tac toe](https://github.com/beccanelson/tttaas-clojure) (Included in setup script)
++ [Java server](https://github.com/beccanelson/tttaas-server) (Included in setup script)
 
 ## To setup this project:
 Clone the repository
@@ -20,6 +22,6 @@ Inside the root folder:
 `mvn test`
 
 ## To start server:
-`./server` 
+`./server`
 
 **Note:** `./setup` must have been run

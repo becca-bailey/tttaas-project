@@ -15,7 +15,11 @@ public class GameController extends AbstractController{
     private String computerDifficulty;
 
     public byte[] get() {
-        return (Response.status(200) + "\r\n\r\n").getBytes();
+        String welcomeMessage = "<h1>Welcome to the tic-tac-toe API!!</h1>" +
+                "<p> To get an appropriate response, send a POST request with a JSON body to this URI. </p>" +
+                "<p>A sample request looks like: <code> { \"board\": [\"X\",\"X\",\"X\",\"O\",\"\",\"\",\"\",\"\",\"O\"], \"gameType\": \"humanVsHuman\"} </code></p>" +
+                "<p>The Response would be: <code>{\"board\":[\"X\",\"X\",\"X\",\"O\",\"\",\"\",\"\",\"\",\"O\"],\"status\":\"player1Wins\"} </code> </p>";
+        return (Response.status(200) + "\r\n\r\n" + welcomeMessage).getBytes();
     }
 
     public byte[] post() {
@@ -50,7 +54,7 @@ public class GameController extends AbstractController{
             return response.getBytes();
         } catch (Exception e) {
             e.printStackTrace();
-            return Response.status(404).getBytes();
+            return ("HTTP/1.1 400 Bad Request \r\n\r\n <h1> Bad Request </h1> <p>A good request looks like this: <code>{ \"board\": [\"X\",\"X\",\"X\",\"O\",\"\",\"\",\"\",\"\",\"O\"], \"gameType\": \"humanVsHuman\"}</code> </p>").getBytes();
         }
     }
 

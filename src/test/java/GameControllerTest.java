@@ -116,5 +116,9 @@ public class GameControllerTest {
 
     }
 
-
+    @Test
+    public void getFileContentsFromFilenameReturnsHTMLFromFile() throws Throwable {
+        String content = new String(controller.getFileContentsFromFilename("./Welcome.html"));
+        assertTrue(content.contains("Welcome"));
+    }
 }

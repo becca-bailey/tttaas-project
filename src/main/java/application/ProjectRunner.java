@@ -10,13 +10,12 @@ import java.io.*;
 import java.util.Properties;
 
 public class ProjectRunner {
-    private static File rootDirectory;
+    public static File rootDirectory;
 
     public static void main(String[] args) {
-        int portNumber = 5000;
+        ServerArguments arguments = new ServerArguments(args);
         try {
-            ServerArguments arguments = new ServerArguments(args);
-            portNumber = arguments.getPortNumber();
+            int portNumber = arguments.getPortNumber();
             rootDirectory = arguments.getRootDirectory();
             loadProperties();
             addRoutes();
@@ -26,22 +25,22 @@ public class ProjectRunner {
         }
     }
 
-    private static void loadProperties() throws IOException {
+    public static void loadProperties() throws IOException {
         Properties config = new Properties();
-        String filename = "config.properties";
+        String filename = "/config.properties";
         try {
-            InputStream input = new FileInputStream(rootDirectory.getPath() + "/config.properties");
+            InputStream input = new FileInputStream(rootDirectory.getPath() + filename);
             config.load(input);
             ServerConfig.rootDirectory = rootDirectory;
             ServerConfig.packageName = config.getProperty("packageName");
             ServerConfig.routesClass = config.getProperty("routesClass");
             input.close();
-        } catch (Exception e) {
+        } catch (FileNotFoundException e) {
             System.err.println("Properties not found");
         }
     }
 
-    private static void addRoutes() throws FileNotFoundException, ClassNotFoundException, IllegalAccessException, InstantiationException {
+    public static void addRoutes() throws ClassNotFoundException, IllegalAccessException, InstantiationException {
         ServerConfig.router = new Router(ServerConfig.rootDirectory);
         Class initializerClass = Class.forName(ServerConfig.routesClass);
         RouteInitializer initializer = (RouteInitializer) initializerClass.newInstance();

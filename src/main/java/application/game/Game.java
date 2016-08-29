@@ -7,12 +7,10 @@ import tic_tac_toe.board$check_each_set_of_possible_moves;
 import tic_tac_toe.board$tie_QMARK_;
 
 public abstract class Game {
-    public String[] board;
-    private String marker;
+    private final String[] board;
 
-    public Game(String[] board, String marker, String computerDifficulty) {
+    Game(String[] board) {
         this.board = board;
-        this.marker = marker;
         IFn require = Clojure.var("clojure.core", "require");
         require.invoke(Clojure.read("tic-tac-toe.board"));
     }
@@ -27,6 +25,10 @@ public abstract class Game {
 
     public Boolean isTie() {
         return (Boolean) board$tie_QMARK_.invokeStatic(board);
+    }
+
+    public boolean gameIsCompleted() {
+        return this.hasWinner() || this.isTie();
     }
 
     public String getStatus() {

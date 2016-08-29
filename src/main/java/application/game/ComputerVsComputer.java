@@ -6,12 +6,12 @@ import tic_tac_toe.iOS_functions$easy_computer_move;
 import tic_tac_toe.iOS_functions$minimax_move;
 
 public class ComputerVsComputer extends Game {
-    private String[] board;
-    private String marker;
-    private String computerDifficulty;
+    private final String[] board;
+    private final String marker;
+    private final String computerDifficulty;
 
     public ComputerVsComputer(String[] board, String marker, String computerDifficulty) {
-        super(board, marker, computerDifficulty);
+        super(board);
         this.board = board;
         this.marker = marker;
         this.computerDifficulty = computerDifficulty;
@@ -24,10 +24,6 @@ public class ComputerVsComputer extends Game {
             board[computerMove] = marker;
         }
         return board;
-    }
-
-    private boolean gameIsCompleted() {
-        return super.hasWinner() || super.isTie();
     }
 
     public int getComputerMove() {

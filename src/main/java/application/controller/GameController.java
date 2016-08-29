@@ -2,11 +2,15 @@ package application.controller;
 
 import application.game.*;
 import com.server.ResponseData;
+import com.server.content.FileHandler;
 import com.server.controller.AbstractController;
 import com.server.utilities.Response;
+import com.server.utilities.SharedUtilities;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.File;
 
 public class GameController extends AbstractController {
     public String body;
@@ -17,11 +21,8 @@ public class GameController extends AbstractController {
 
 
     public byte[] get() {
-        String welcomeMessage = "<h1>Welcome to the tic-tac-toe API!!</h1>" +
-                "<p> To get an appropriate response, send a POST request with a JSON body to this URI. </p>" +
-                "<p>A sample request looks like: <code> { \"board\": [\"X\",\"X\",\"X\",\"O\",\"\",\"\",\"\",\"\",\"O\"], \"gameType\": \"humanVsHuman\"} </code></p>" +
-                "<p>The Response would be: <code>{\"board\":[\"X\",\"X\",\"X\",\"O\",\"\",\"\",\"\",\"\",\"O\"],\"status\":\"player1Wins\"} </code> </p>";
-        return (Response.status(200) + "\r\n\r\n" + welcomeMessage).getBytes();
+        byte[] html = getFileContentsFromFilename("./Welcome.html");
+        return SharedUtilities.addByteArrays((Response.status(200) + "\r\n\r\n").getBytes(), html);
     }
 
     public String getJSONPropertyWithDefault(JSONObject json, String property, String defaultValue) {
@@ -52,7 +53,8 @@ public class GameController extends AbstractController {
         try {
             setPropertiesFromRequestBody(body);
         } catch (JSONException e) {
-            return ("HTTP/1.1 400 Bad Request \r\n\r\n <h1> Invalid JSON </h1> <p>A good request looks like this: <code>{ \"board\": [\"X\",\"X\",\"X\",\"O\",\"\",\"\",\"\",\"\",\"O\"], \"gameType\": \"humanVsHuman\"}</code> </p>").getBytes();
+            byte[] html = getFileContentsFromFilename("./InvalidJSON.html");
+            return SharedUtilities.addByteArrays(("HTTP/1.1 400 Bad Request\r\n\r\n").getBytes(), html);
         }
         Game game = getGame(gameType, board);
         String[] updatedBoard = game.getBoard();
@@ -84,5 +86,10 @@ public class GameController extends AbstractController {
 
     public void sendResponseData(ResponseData responseData) {
         this.body = responseData.requestBody;
+    }
+
+    public byte[] getFileContentsFromFilename(String filename) {
+        FileHandler handler = new FileHandler(new File(filename));
+        return handler.getFileContents();
     }
 }

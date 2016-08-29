@@ -27,14 +27,14 @@ public abstract class Game {
         return (Boolean) board$tie_QMARK_.invokeStatic(board);
     }
 
-    public boolean gameIsCompleted() {
+    public boolean isCompleted() {
         return this.hasWinner() || this.isTie();
     }
 
     public String getStatus() {
-        if (this.isWinner("X")) {
+        if (this.isWinner(Marker.player1)) {
             return "player1Wins";
-        } else if (this.isWinner("O")) {
+        } else if (this.isWinner(Marker.player2)) {
             return "player2Wins";
         } else if (this.isTie()) {
             return "tie";

@@ -1,9 +1,6 @@
 package application.controller;
 
-import application.game.ComputerVsComputer;
-import application.game.Game;
-import application.game.HumanVsComputer;
-import application.game.HumanVsHuman;
+import application.game.*;
 import com.server.ResponseData;
 import com.server.controller.AbstractController;
 import com.server.utilities.Response;
@@ -47,7 +44,7 @@ public class GameController extends AbstractController {
         JSONObject json = new JSONObject(body);
         board = toStringArray(json.getJSONArray("board"));
         gameType = json.getString("gameType");
-        computerMarker = getJSONPropertyWithDefault(json, "computerMarker", "O");
+        computerMarker = getJSONPropertyWithDefault(json, "computerMarker", Marker.player2);
         computerDifficulty = getJSONPropertyWithDefault(json, "computerDifficulty", "hard");
     }
 

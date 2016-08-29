@@ -81,8 +81,8 @@ public class GameTest {
         Game winGame = new HumanVsHuman(boardWithXWinner);
         Game newGame = new HumanVsHuman(initialBoard);
 
-        assertFalse(newGame.gameIsCompleted());
-        assertTrue(tieGame.gameIsCompleted());
-        assertTrue(winGame.gameIsCompleted());
+        assertFalse(newGame.isCompleted());
+        assertTrue(tieGame.isCompleted());
+        assertTrue(winGame.isCompleted());
     }
 }

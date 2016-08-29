@@ -17,9 +17,9 @@ public class HumanVsComputer extends Game {
 
     @Override
     public String[] getBoard() {
-        if (!gameIsCompleted()) {
+        if (!isCompleted()) {
             int computerMove = getComputerMove();
-            board[computerMove] = "O";
+            board[computerMove] = Marker.player2;
         }
         return board;
     }

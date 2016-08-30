@@ -14,7 +14,7 @@ public class RoutesTest {
         Router router = new Router(new File("."));
         Routes routes = new Routes();
         routes.initializeRoutes(router);
-        Route gameRoute = new Route("/game");
-        assertEquals(gameRoute.getPaths(), router.getExistingRoute("/game").getPaths());
+        Route gameRoute = new Route("/api/computer_move");
+        assertEquals(gameRoute.getPaths(), router.getExistingRoute("/api/computer_move").getPaths());
     }
 }

@@ -32,7 +32,7 @@ public class ProjectRunnerTest {
         ProjectRunner.rootDirectory = new File(".");
         ProjectRunner.loadProperties();
         ProjectRunner.addRoutes();
-        Route gameRoute = new Route("/game");
-        TestCase.assertEquals(gameRoute.getPaths(), ServerConfig.router.getExistingRoute("/game").getPaths());
+        Route gameRoute = new Route("/api/computer_move");
+        TestCase.assertEquals(gameRoute.getPaths(), ServerConfig.router.getExistingRoute("/api/computer_move").getPaths());
     }
 }

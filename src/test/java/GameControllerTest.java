@@ -2,7 +2,6 @@ import application.controller.GameController;
 import application.game.ComputerVsComputer;
 import application.game.Game;
 import application.game.HumanVsComputer;
-import application.game.HumanVsHuman;
 import com.server.ResponseData;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -13,12 +12,6 @@ import static org.junit.Assert.*;
 public class GameControllerTest {
     private final GameController controller = new GameController();
     private final String[] initialBoard = new String[] {"", "", "", "", "", "", "", "", ""};
-
-    @Test
-    public void getGameFromGameTypeReturnsAHumanVsHumanGame() throws Throwable {
-        Game game = controller.getGame("humanVsHuman", initialBoard);
-        assertEquals(HumanVsHuman.class, game.getClass());
-    }
 
     @Test
     public void getGameFromGameTypeReturnsAHumanVsComputerGame() throws Throwable {

@@ -8,9 +8,6 @@ import com.server.utilities.Response;
 import com.server.utilities.SharedUtilities;
 import org.json.JSONObject;
 
-/**
- * Created by Becca on 8/30/16.
- */
 public class StatusController extends AbstractController{
 
     public String[] board;
@@ -33,9 +30,14 @@ public class StatusController extends AbstractController{
     }
 
     public void sendResponseData(ResponseData responseData) {
+        String[] emptyBoard = new String[] {"","","","","","","","",""};
         String boardAsString = responseData.parameters.get("board");
+        board = emptyBoard;
         if (boardAsString != null) {
-            board = SharedUtilities.findAllMatches("(?<=\")(\\w*)(?=\")", boardAsString).toArray(new String[9]);
+            board = SharedUtilities.findAllMatches("(?<=\")(\\w*)(?=\")", boardAsString).toArray(new String[0]);
+        }
+        if (board.length < 9) {
+            board = emptyBoard;
         }
     }
 }

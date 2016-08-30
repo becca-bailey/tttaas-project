@@ -69,10 +69,8 @@ public class GameController extends AbstractController {
     public Game getGame(String gameType, String[] board) {
         if (gameType.equals("computerVsHuman") || gameType.equals("humanVsComputer")) {
             return new HumanVsComputer(board, this.computerDifficulty);
-        } else if (gameType.equals("computerVsComputer")) {
-            return new ComputerVsComputer(board, this.computerMarker, this.computerDifficulty);
         } else {
-            return new HumanVsHuman(board);
+            return new ComputerVsComputer(board, this.computerMarker, this.computerDifficulty);
         }
     }
 

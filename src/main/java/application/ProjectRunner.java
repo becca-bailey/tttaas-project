@@ -12,7 +12,7 @@ import java.util.Properties;
 public class ProjectRunner {
     public static File rootDirectory;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         ServerArguments arguments = new ServerArguments(args);
         try {
             int portNumber = arguments.getPortNumber();
@@ -20,7 +20,7 @@ public class ProjectRunner {
             loadProperties();
             addRoutes();
             Server.main(new String[] { "-r", rootDirectory.getPath(), "-p", portNumber + ""});
-        } catch (Exception e) {
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | IOException e) {
             e.printStackTrace();
         }
     }

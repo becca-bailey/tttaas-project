@@ -19,7 +19,7 @@
         <dependency>
             <groupId>becca-tom</groupId>
             <artifactId>server</artifactId>
-            <version>0.1.4</version>
+            <version>0.1.5</version>
         </dependency>
         <dependency>
             <groupId>tic-tac-toe</groupId>
@@ -73,6 +73,14 @@
         </descriptorRefs>
       </configuration>
     </plugin>
-       </plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 </project>

@@ -5,10 +5,12 @@ git clone https://github.com/beccanelson/tttaas-clojure.git ./lib/tttaas-clojure
 git clone https://github.com/beccanelson/tttaas-server.git ./lib/tttaas-server/
 set -e
 cd ./lib/tttaas-clojure
+git pull
 lein pom
 mvn clean
 lein uberjar
 cd ../tttaas-server/
+git pull
 mvn clean
 mvn install
 mvn package
@@ -20,6 +22,6 @@ mvn deploy:deploy-file -Durl=file://$repoDir -Dfile=./lib/tttaas-clojure/target/
 mvn install:install-file -Dfile=./lib/tttaas-clojure/target/tic-tac-toe-0.2.2-SNAPSHOT-standalone.jar -DgroupId=tic-tac-toe -DartifactId=tic-tac-toe -Dversion=0.2.2-SNAPSHOT -Dpackaging=jar
 mvn install:install-file -Dfile=./lib/tttaas-server/target/server-0.1.5.jar -DgroupId=becca-tom -DartifactId=server -Dversion=0.1.5 -Dpackaging=jar
 mvn deploy:deploy-file -Durl=file://$repoDir -Dfile=./lib/tttaas-server/target/server-0.1.5.jar -DgroupId=becca-tom -DartifactId=server -Dversion=0.1.5 -Dpackaging=jar
-mvn package -DskipTests
+mvn -U clean package -DskipTests
 mvn clean compile assembly:single
 cp ./target/tic-tac-toe-1.0-SNAPSHOT-jar-with-dependencies.jar .

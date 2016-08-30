@@ -1,9 +1,7 @@
 import application.game.HumanVsComputer;
 import org.junit.Test;
 
-import static junit.framework.Assert.assertTrue;
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class HumanVsComputerTest {
     private final String[] initialBoard = new String[] {"", "", "", "", "", "", "", "", ""};

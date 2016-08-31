@@ -2,34 +2,36 @@ package application.game;
 
 import clojure.java.api.Clojure;
 import clojure.lang.IFn;
-import tic_tac_toe.iOS_functions$minimax_move;
 import tic_tac_toe.iOS_functions$easy_computer_move;
+import tic_tac_toe.iOS_functions$minimax_move;
 
-public class HumanVsComputer extends Game {
+public class Computer extends Game {
     private final String[] board;
+    private final String marker;
     private final String computerDifficulty;
 
-    public HumanVsComputer(String[] board, String computerDifficulty) {
+    public Computer(String[] board, String marker, String computerDifficulty) {
         super(board);
         this.board = board;
+        this.marker = marker;
         this.computerDifficulty = computerDifficulty;
     }
 
     @Override
     public String[] getBoard() {
         if (!isCompleted()) {
-            int computerMove = getComputerMove();
-            board[computerMove] = Marker.player2;
+            int computerMove = getMove();
+            board[computerMove] = marker;
         }
         return board;
     }
 
-    public int getComputerMove() {
+    public int getMove() {
         IFn require = Clojure.var("clojure.core", "require");
         require.invoke(Clojure.read("tic-tac-toe.iOS_functions"));
         long value;
         if (computerDifficulty.equals("hard")) {
-            value = (Long) iOS_functions$minimax_move.invokeStatic(board);
+            value = (Long) iOS_functions$minimax_move.invokeStatic(board, marker);
         } else {
             value = (Long) iOS_functions$easy_computer_move.invokeStatic(board);
         }

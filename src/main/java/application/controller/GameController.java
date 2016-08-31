@@ -56,7 +56,8 @@ public class GameController extends AbstractController {
             byte[] html = getFileContentsFromFilename("./InvalidJSON.html");
             return SharedUtilities.addByteArrays(("HTTP/1.1 400 Bad Request\r\n\r\n").getBytes(), html);
         }
-        Game game = getGame(gameType, board);
+        Game game = new Computer(board, this.computerMarker, this.computerDifficulty);
+
         String[] updatedBoard = game.getBoard();
 
         String status = game.getStatus();
@@ -64,14 +65,6 @@ public class GameController extends AbstractController {
 
         String response = (Response.status(201) + "\r\n" + "Access-Control-Allow-Origin: *" + "\r\n" + "Access-Control-Allow-Methods: POST" + "\r\n" + "Access-Control-Max-Age: 1000" + "\r\n\r\n" + jsonData);
         return response.getBytes();
-    }
-
-    public Game getGame(String gameType, String[] board) {
-        if (gameType.equals("computerVsHuman") || gameType.equals("humanVsComputer")) {
-            return new HumanVsComputer(board, this.computerDifficulty);
-        } else {
-            return new ComputerVsComputer(board, this.computerMarker, this.computerDifficulty);
-        }
     }
 
     public String[] toStringArray(JSONArray board) {

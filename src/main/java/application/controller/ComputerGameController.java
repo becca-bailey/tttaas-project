@@ -12,7 +12,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 
-public class GameController extends AbstractController {
+public class ComputerGameController extends AbstractController {
     public String body;
     public String[] board;
     public String gameType;
@@ -56,22 +56,19 @@ public class GameController extends AbstractController {
             byte[] html = getFileContentsFromFilename("./InvalidJSON.html");
             return SharedUtilities.addByteArrays(("HTTP/1.1 400 Bad Request\r\n\r\n").getBytes(), html);
         }
-        Game game = getGame(gameType, board);
-        String[] updatedBoard = game.getBoard();
+
+        Game game = new Game(board);
+
+        if (!game.isCompleted()) {
+            Computer computer = new Computer(game.board, this.computerMarker, this.computerDifficulty);
+            this.board = computer.getBoard();
+        }
 
         String status = game.getStatus();
-        JSONObject jsonData = createGameJSON(status,updatedBoard);
+        JSONObject jsonData = createGameJSON(status, this.board);
 
         String response = (Response.status(201) + "\r\n" + "Access-Control-Allow-Origin: *" + "\r\n" + "Access-Control-Allow-Methods: POST" + "\r\n" + "Access-Control-Max-Age: 1000" + "\r\n\r\n" + jsonData);
         return response.getBytes();
-    }
-
-    public Game getGame(String gameType, String[] board) {
-        if (gameType.equals("computerVsHuman") || gameType.equals("humanVsComputer")) {
-            return new HumanVsComputer(board, this.computerDifficulty);
-        } else {
-            return new ComputerVsComputer(board, this.computerMarker, this.computerDifficulty);
-        }
     }
 
     public String[] toStringArray(JSONArray board) {

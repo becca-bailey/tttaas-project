@@ -1,20 +1,19 @@
 package application.controller;
 
 import application.game.Game;
-import application.game.HumanVsHuman;
 import com.server.ResponseData;
 import com.server.controller.AbstractController;
 import com.server.utilities.Response;
 import com.server.utilities.SharedUtilities;
 import org.json.JSONObject;
 
-public class StatusController extends AbstractController{
+public class HumanGameController extends AbstractController{
 
     public String[] board;
 
     public byte[] get() {
-        Game humanGame = new HumanVsHuman(board);
-        String status = humanGame.getStatus();
+        Game game = new Game(board);
+        String status = game.getStatus();
         JSONObject jsonData = createGameJSON(status,board);
         String response = (Response.status(201) + "\r\n" + "Access-Control-Allow-Origin: *" + "\r\n" + "Access-Control-Allow-Methods: POST" + "\r\n" + "Access-Control-Max-Age: 1000" + "\r\n\r\n" + jsonData);
         return response.getBytes();

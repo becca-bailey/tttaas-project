@@ -1,45 +1,41 @@
 import application.game.Computer;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import java.util.Arrays;
+
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ComputerTest {
     private final String[] initialBoard = new String[]{"", "", "", "", "", "", "", "", ""};
 
     @Test
-    public void getMoveReturnsBestMove() {
-        Computer game = new Computer(initialBoard, "O", "hard");
-        assertEquals(8, game.getMove());
-    }
-
-    @Test
     public void getBoardReturnsUpdatedBoardWithFirstMove() {
-        Computer game = new Computer(initialBoard, "O", "hard");
+        Computer computer = new Computer(initialBoard, "O", "hard");
         String[] expectedFirstMove = new String[] {"", "", "", "", "", "", "", "", "O"};
-        assertArrayEquals(expectedFirstMove, game.getBoard());
+        assertArrayEquals(expectedFirstMove, computer.getBoard());
     }
 
     @Test
     public void getBoardWithEasyComputerReturnsUpdatedBoardWithRandomLastMove() {
         String[] initialBoard = new String[] {"X", "O", "X", "O", "X", "O", "X", "", "O"};
-        Computer game = new Computer(initialBoard, "O", "easy");
-        game.getMove();
-        assertEquals(7, game.getMove());
+        String[] expectedBoard = new String[] {"X", "O", "X", "O", "X", "O", "X", "O", "O"};
+        Computer computer = new Computer(initialBoard, "O", "easy");
+        assertArrayEquals(expectedBoard, computer.getBoard());
     }
 
     @Test
     public void getBoardWithEasyComputerReturnsUpdatedBoardWithRandomMove() {
-        Computer game = new Computer(initialBoard, "O", "easy");
-        game.getMove();
-        int computerMove = game.getMove();
-        assertTrue(computerMove <= 8 && computerMove >= 0);
+        String[] initialBoard = new String[] {"", "", "", "", "", "", "", "", ""};
+        Computer computer = new Computer(initialBoard, "O", "easy");
+        assertTrue(Arrays.asList(computer.getBoard()).contains("O"));
     }
 
     @Test
     public void getBoardReturnsUpdatedBoardWithSecondMove() {
         String[] firstComputerMove = new String[] {"", "", "", "", "", "", "", "", "X"};
-        Computer game = new Computer(firstComputerMove, "O", "hard");
+        Computer computer = new Computer(firstComputerMove, "O", "hard");
         String[] expectedSecondMove = new String[] {"", "", "", "", "O", "", "", "", "X"};
-        assertArrayEquals(expectedSecondMove, game.getBoard());
+        assertArrayEquals(expectedSecondMove, computer.getBoard());
     }
 }

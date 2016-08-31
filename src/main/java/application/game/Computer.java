@@ -23,7 +23,7 @@ public class Computer {
         return board;
     }
 
-    public int getMove() {
+    private int getMove() {
         IFn require = Clojure.var("clojure.core", "require");
         require.invoke(Clojure.read("tic-tac-toe.iOS_functions"));
         long value;

@@ -36,6 +36,16 @@ public class ComputerGameControllerTest {
     }
 
     @Test
+    public void callingPostAfterSettingBodyReturnsInProgressResponse() throws Throwable {
+        ResponseData data = new ResponseData();
+        data.sendRequestBody("{ \"board\": [\"X\",\"\",\"X\",\"O\",\"\",\"\",\"\",\"\",\"O\"], \"gameType\": \"humanVsHuman\"}");
+        controller.sendResponseData(data);
+        String response = new String(controller.post());
+        assertTrue(response.contains("status"));
+        assertTrue(response.contains("board"));
+    }
+
+    @Test
     public void callingPostAfterSettingInvalidBodyReturns400Response() throws Throwable {
         ResponseData data = new ResponseData();
         data.sendRequestBody("{\"gameType\": \"humanVsHuman\"}");

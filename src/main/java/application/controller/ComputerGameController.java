@@ -1,16 +1,18 @@
 package application.controller;
 
-import application.game.*;
+import application.game.Computer;
+import application.game.Game;
+import application.game.Marker;
 import com.server.ResponseData;
+import com.server.ServerResponse;
 import com.server.content.FileHandler;
 import com.server.controller.AbstractController;
-import com.server.utilities.Response;
-import com.server.utilities.SharedUtilities;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.Map;
 
 public class ComputerGameController extends AbstractController {
     public String body;
@@ -18,11 +20,13 @@ public class ComputerGameController extends AbstractController {
     public String gameType;
     public String computerDifficulty;
     public String computerMarker;
+    private Map<String, String> headers;
 
 
     public byte[] get() {
         byte[] html = getFileContentsFromFilename("./Welcome.html");
-        return SharedUtilities.addByteArrays((Response.status(200) + "\r\n\r\n").getBytes(), html);
+        ServerResponse response = new ServerResponse(200);
+        return response.getFullResponse(new String(html));
     }
 
     public String getJSONPropertyWithDefault(JSONObject json, String property, String defaultValue) {
@@ -54,7 +58,8 @@ public class ComputerGameController extends AbstractController {
             setPropertiesFromRequestBody(body);
         } catch (JSONException e) {
             byte[] html = getFileContentsFromFilename("./InvalidJSON.html");
-            return SharedUtilities.addByteArrays(("HTTP/1.1 400 Bad Request\r\n\r\n").getBytes(), html);
+            ServerResponse response = new ServerResponse(400);
+            return response.getFullResponse(new String(html));
         }
 
         Game game = new Game(board);
@@ -64,11 +69,7 @@ public class ComputerGameController extends AbstractController {
             this.board = computer.getBoard();
         }
 
-        String status = game.getStatus();
-        JSONObject jsonData = createGameJSON(status, this.board);
-
-        String response = (Response.status(201) + "\r\n" + "Access-Control-Allow-Origin: *" + "\r\n" + "Access-Control-Allow-Methods: POST" + "\r\n" + "Access-Control-Max-Age: 1000" + "\r\n\r\n" + jsonData);
-        return response.getBytes();
+        return getResponse(this.board, game.getStatus());
     }
 
     public String[] toStringArray(JSONArray board) {
@@ -81,10 +82,26 @@ public class ComputerGameController extends AbstractController {
 
     public void sendResponseData(ResponseData responseData) {
         this.body = responseData.requestBody;
+        this.headers = responseData.headers;
     }
 
     public byte[] getFileContentsFromFilename(String filename) {
         FileHandler handler = new FileHandler(new File(filename));
         return handler.getFileContents();
+    }
+
+    private byte[] getResponse(String[] board, String status) {
+        JSONObject jsonData = createGameJSON(status, board);
+        ServerResponse response = new ServerResponse(201);
+        String origin;
+        try {
+            origin = headers.get("Origin");
+        } catch (NullPointerException e) {
+            origin = "null";
+        }
+        response.addHeader("Access-Control-Allow-Origin", origin);
+        response.addHeader("Access-Control-Allow-Methods", "POST");
+        response.addHeader("Access-Control-Max-Age", "1000");
+        return response.getFullResponse(jsonData.toString());
     }
 }

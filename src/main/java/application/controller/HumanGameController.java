@@ -2,21 +2,21 @@ package application.controller;
 
 import application.game.Game;
 import com.server.ResponseData;
+import com.server.ServerResponse;
 import com.server.controller.AbstractController;
-import com.server.utilities.Response;
 import com.server.utilities.SharedUtilities;
 import org.json.JSONObject;
 
+import java.util.Map;
+
 public class HumanGameController extends AbstractController{
+    private Map<String, String> headers;
 
     public String[] board;
 
     public byte[] get() {
         Game game = new Game(board);
-        String status = game.getStatus();
-        JSONObject jsonData = createGameJSON(status,board);
-        String response = (Response.status(201) + "\r\n" + "Access-Control-Allow-Origin: *" + "\r\n" + "Access-Control-Allow-Methods: POST" + "\r\n" + "Access-Control-Max-Age: 1000" + "\r\n\r\n" + jsonData);
-        return response.getBytes();
+        return getResponse(board, game.getStatus());
     }
 
 
@@ -29,6 +29,7 @@ public class HumanGameController extends AbstractController{
     }
 
     public void sendResponseData(ResponseData responseData) {
+        this.headers = responseData.headers;
         String[] emptyBoard = new String[] {"","","","","","","","",""};
         String boardAsString = responseData.parameters.get("board");
         board = emptyBoard;
@@ -38,5 +39,19 @@ public class HumanGameController extends AbstractController{
         if (board.length < 9) {
             board = emptyBoard;
         }
+    }
+
+    private byte[] getResponse(String[] board, String status) {
+        JSONObject jsonData = createGameJSON(status, board);
+        ServerResponse response = new ServerResponse(200);
+        String origin;
+        try {
+            origin = headers.get("Origin");
+        } catch (NullPointerException e) {
+            origin = "null";
+        }
+        response.addHeader("Access-Control-Allow-Origin", origin);
+        response.addHeader("Access-Control-Max-Age", "1000");
+        return response.getFullResponse(jsonData.toString());
     }
 }

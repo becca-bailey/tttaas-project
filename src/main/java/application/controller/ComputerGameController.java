@@ -12,7 +12,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 
-public class GameController extends AbstractController {
+public class ComputerGameController extends AbstractController {
     public String body;
     public String[] board;
     public String gameType;
@@ -56,15 +56,21 @@ public class GameController extends AbstractController {
             byte[] html = getFileContentsFromFilename("./InvalidJSON.html");
             return SharedUtilities.addByteArrays(("HTTP/1.1 400 Bad Request\r\n\r\n").getBytes(), html);
         }
-        Game game = new Computer(board, this.computerMarker, this.computerDifficulty);
-
-        String[] updatedBoard = game.getBoard();
-
-        String status = game.getStatus();
-        JSONObject jsonData = createGameJSON(status,updatedBoard);
+        GameLogic gameLogic = new GameLogic(board);
+        this.board = getUpdatedBoard(gameLogic);
+        String status = gameLogic.getStatus();
+        JSONObject jsonData = createGameJSON(status, this.board);
 
         String response = (Response.status(201) + "\r\n" + "Access-Control-Allow-Origin: *" + "\r\n" + "Access-Control-Allow-Methods: POST" + "\r\n" + "Access-Control-Max-Age: 1000" + "\r\n\r\n" + jsonData);
         return response.getBytes();
+    }
+
+    public String[] getUpdatedBoard(GameLogic gameLogic) {
+        Computer computer = new Computer(gameLogic.board, this.computerMarker, this.computerDifficulty);
+        if (!gameLogic.isCompleted()) {
+            return computer.getBoard();
+        }
+        return gameLogic.board;
     }
 
     public String[] toStringArray(JSONArray board) {

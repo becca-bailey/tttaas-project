@@ -1,4 +1,4 @@
-import application.controller.StatusController;
+import application.controller.HumanGameController;
 import com.server.ResponseData;
 import com.server.request.Parameters;
 import org.json.JSONObject;
@@ -6,8 +6,8 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class StatusControllerTest {
-    private final StatusController controller = new StatusController();
+public class HumanGameControllerTest {
+    private final HumanGameController controller = new HumanGameController();
     private final String[] initialBoard = new String[] {"", "", "", "", "", "", "", "", ""};
 
     @Test

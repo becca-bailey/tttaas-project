@@ -5,24 +5,21 @@ import clojure.lang.IFn;
 import tic_tac_toe.iOS_functions$easy_computer_move;
 import tic_tac_toe.iOS_functions$minimax_move;
 
-public class Computer extends Game {
+public class Computer {
     private final String[] board;
     private final String marker;
     private final String computerDifficulty;
 
     public Computer(String[] board, String marker, String computerDifficulty) {
-        super(board);
         this.board = board;
         this.marker = marker;
         this.computerDifficulty = computerDifficulty;
     }
 
-    @Override
     public String[] getBoard() {
-        if (!isCompleted()) {
-            int computerMove = getMove();
-            board[computerMove] = marker;
-        }
+        int computerMove = getMove();
+        board[computerMove] = marker;
+
         return board;
     }
 

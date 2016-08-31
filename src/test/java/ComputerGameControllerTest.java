@@ -1,4 +1,4 @@
-import application.controller.GameController;
+import application.controller.ComputerGameController;
 import com.server.ResponseData;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -6,8 +6,8 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class GameControllerTest {
-    private final GameController controller = new GameController();
+public class ComputerGameControllerTest {
+    private final ComputerGameController controller = new ComputerGameController();
     private final String[] initialBoard = new String[] {"", "", "", "", "", "", "", "", ""};
 
     @Test

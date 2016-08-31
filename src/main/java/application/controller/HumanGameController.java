@@ -7,7 +7,7 @@ import com.server.utilities.Response;
 import com.server.utilities.SharedUtilities;
 import org.json.JSONObject;
 
-public class StatusController extends AbstractController{
+public class HumanGameController extends AbstractController{
 
     public String[] board;
 

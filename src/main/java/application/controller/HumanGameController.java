@@ -12,8 +12,8 @@ public class HumanGameController extends AbstractController{
     public String[] board;
 
     public byte[] get() {
-        Game humanGame = new Game(board);
-        String status = humanGame.getStatus();
+        Game game = new Game(board);
+        String status = game.getStatus();
         JSONObject jsonData = createGameJSON(status,board);
         String response = (Response.status(201) + "\r\n" + "Access-Control-Allow-Origin: *" + "\r\n" + "Access-Control-Allow-Methods: POST" + "\r\n" + "Access-Control-Max-Age: 1000" + "\r\n\r\n" + jsonData);
         return response.getBytes();

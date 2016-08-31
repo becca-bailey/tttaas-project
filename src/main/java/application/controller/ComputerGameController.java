@@ -56,21 +56,19 @@ public class ComputerGameController extends AbstractController {
             byte[] html = getFileContentsFromFilename("./InvalidJSON.html");
             return SharedUtilities.addByteArrays(("HTTP/1.1 400 Bad Request\r\n\r\n").getBytes(), html);
         }
-        GameLogic gameLogic = new GameLogic(board);
-        this.board = getUpdatedBoard(gameLogic);
-        String status = gameLogic.getStatus();
+
+        Game game = new Game(board);
+
+        if (!game.isCompleted()) {
+            Computer computer = new Computer(game.board, this.computerMarker, this.computerDifficulty);
+            this.board = computer.getBoard();
+        }
+
+        String status = game.getStatus();
         JSONObject jsonData = createGameJSON(status, this.board);
 
         String response = (Response.status(201) + "\r\n" + "Access-Control-Allow-Origin: *" + "\r\n" + "Access-Control-Allow-Methods: POST" + "\r\n" + "Access-Control-Max-Age: 1000" + "\r\n\r\n" + jsonData);
         return response.getBytes();
-    }
-
-    public String[] getUpdatedBoard(GameLogic gameLogic) {
-        Computer computer = new Computer(gameLogic.board, this.computerMarker, this.computerDifficulty);
-        if (!gameLogic.isCompleted()) {
-            return computer.getBoard();
-        }
-        return gameLogic.board;
     }
 
     public String[] toStringArray(JSONArray board) {

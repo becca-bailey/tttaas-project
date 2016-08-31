@@ -6,10 +6,10 @@ import tic_tac_toe.board$check_each_marker_for_win;
 import tic_tac_toe.board$check_each_set_of_possible_moves;
 import tic_tac_toe.board$tie_QMARK_;
 
-public abstract class Game {
+public class Game {
     private final String[] board;
 
-    Game(String[] board) {
+    public Game(String[] board) {
         this.board = board;
         IFn require = Clojure.var("clojure.core", "require");
         require.invoke(Clojure.read("tic-tac-toe.board"));

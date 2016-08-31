@@ -1,5 +1,4 @@
 import application.game.Game;
-import application.game.HumanVsHuman;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -13,73 +12,73 @@ public class GameTest {
 
     @Test
     public void hasWinnerReturnsTrueIfThereIsAWinner() throws Exception {
-        Game game = new HumanVsHuman(boardWithXWinner);
+        Game game = new Game(boardWithXWinner);
         assertTrue(game.hasWinner());
     }
 
     @Test
     public void getBoardReturnsCurrentBoard() throws Exception {
-        Game game = new HumanVsHuman(boardWithXWinner);
+        Game game = new Game(boardWithXWinner);
         assertArrayEquals(boardWithXWinner, game.getBoard());
     }
 
     @Test
     public void hasWinnerReturnsFalseForInitialBoard() throws Exception {
-        Game game = new HumanVsHuman(initialBoard);
+        Game game = new Game(initialBoard);
         assertFalse(game.hasWinner());
     }
 
     @Test
     public void getGameStatusReturnsWinnerIfXWins() throws Exception {
-        Game game = new HumanVsHuman(boardWithXWinner);
+        Game game = new Game(boardWithXWinner);
         assertEquals("player1Wins", game.getStatus());
     }
 
     @Test
     public void getGameStatusReturnsWinnerIfOWins() throws Exception {
-        Game game = new HumanVsHuman(boardWithOWinner);
+        Game game = new Game(boardWithOWinner);
         assertEquals("player2Wins", game.getStatus());
     }
 
     @Test
     public void isWinnerReturnsTrueIfXWins() throws Exception {
-        Game game = new HumanVsHuman(boardWithXWinner);
+        Game game = new Game(boardWithXWinner);
         assertTrue(game.isWinner("X"));
         assertFalse(game.isWinner("O"));
     }
 
     @Test
     public void isWinnerReturnsTrueIfOWins() throws Exception {
-        Game game = new HumanVsHuman(boardWithOWinner);
+        Game game = new Game(boardWithOWinner);
         assertTrue(game.isWinner("O"));
         assertFalse(game.isWinner("X"));
     }
 
     @Test
     public void isTieReturnsIfTie() throws Exception {
-        Game game = new HumanVsHuman(boardWithTie);
+        Game game = new Game(boardWithTie);
         assertTrue(game.isTie());
         assertFalse(game.hasWinner());
     }
 
     @Test
     public void getGameStatusReturnsTie() throws Exception  {
-        Game game = new HumanVsHuman(boardWithTie);
+        Game game = new Game(boardWithTie);
         assertEquals("tie", game.getStatus());
     }
 
     @Test
     public void getGameStatusReturnsGameInProgress() throws Exception  {
-        Game game = new HumanVsHuman(initialBoard);
+        Game game = new Game(initialBoard);
         assertEquals("in progress", game.getStatus());
     }
 
 
     @Test
     public void getGameIsCompletedForTie() throws Exception {
-        Game tieGame = new HumanVsHuman(boardWithTie);
-        Game winGame = new HumanVsHuman(boardWithXWinner);
-        Game newGame = new HumanVsHuman(initialBoard);
+        Game tieGame = new Game(boardWithTie);
+        Game winGame = new Game(boardWithXWinner);
+        Game newGame = new Game(initialBoard);
 
         assertFalse(newGame.isCompleted());
         assertTrue(tieGame.isCompleted());

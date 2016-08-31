@@ -1,7 +1,6 @@
 package application.controller;
 
 import application.game.Game;
-import application.game.HumanVsHuman;
 import com.server.ResponseData;
 import com.server.controller.AbstractController;
 import com.server.utilities.Response;
@@ -13,7 +12,7 @@ public class StatusController extends AbstractController{
     public String[] board;
 
     public byte[] get() {
-        Game humanGame = new HumanVsHuman(board);
+        Game humanGame = new Game(board);
         String status = humanGame.getStatus();
         JSONObject jsonData = createGameJSON(status,board);
         String response = (Response.status(201) + "\r\n" + "Access-Control-Allow-Origin: *" + "\r\n" + "Access-Control-Allow-Methods: POST" + "\r\n" + "Access-Control-Max-Age: 1000" + "\r\n\r\n" + jsonData);

@@ -1,7 +1,8 @@
 set -e
 heroku login
 bash ./setup
-git add -F ./repo/*
+git add -f ./repo/*
+git add -f tic-tac-toe-1.0-SNAPSHOT-jar-with-dependencies.jar
 git commit -m "heroku deploy"
 git push heroku master
 git reset --hard origin/master

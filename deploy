@@ -1,0 +1,7 @@
+set -e
+heroku login
+bash ./setup
+git add -F ./repo/*
+git commit -m "heroku deploy"
+git push heroku master
+git reset --hard origin/master
